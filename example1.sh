@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Generates keypairs
+# Alice sends message to Bob
+
 echo
 echo "--> Generating Alice's private key"
 echo
