@@ -1,0 +1,12 @@
+alice/alice_priv_key.pem
+alice/alice_pub_key.pem
+alice/bob_pub_key.pem
+alice/ciphertext
+alice/ciphertext.base64
+bob/alice_pub_key.pem
+bob/bob_priv_key.pem
+bob/bob_pub_key.pem
+bob/ciphertext
+bob/ciphertext.base64
+bob/plaintext
+
