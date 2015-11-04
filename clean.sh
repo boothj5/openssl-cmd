@@ -16,3 +16,11 @@ rm -f alice/ciphertext.base64
 rm -f bob/ciphertext.base64
 rm -f bob/ciphertext
 rm -f bob/plaintext
+
+rm -f alice/session_key
+rm -f alice/session_key_ciphertext
+rm -f alice/session_key_ciphertext.base64
+
+rm -f bob/session_key
+rm -f bob/session_key_ciphertext
+rm -f bob/session_key_ciphertext.base64

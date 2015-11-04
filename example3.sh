@@ -30,22 +30,33 @@ echo "--> Encrypting Bobs's private key"
 echo
 openssl rsa -in bob/bob_priv_key.pem -des3 -out bob/bob_priv_enc_key.pem
 
-echo
 echo "--> Exchaning public keys"
 cp alice/alice_pub_key.pem bob/.
 cp bob/bob_pub_key.pem alice/.
 
-echo "--> Alice encrypting plaintext"
-openssl rsautl -encrypt -inkey alice/bob_pub_key.pem -pubin -in alice/plaintext -out alice/ciphertext
+echo "--> Alice creating session key"
+openssl rand 8 -hex > alice/session_key
+echo "--> Alice encrypting session key"
+openssl rsautl -encrypt -inkey alice/bob_pub_key.pem -pubin -in alice/session_key -out alice/session_key_ciphertext
+echo "--> Alice base64 encoding session key ciphertext"
+base64 alice/session_key_ciphertext > alice/session_key_ciphertext.base64
+echo "--> Alice encrypting plaintext with session key"
+openssl enc -des3 -in alice/plaintext -out alice/ciphertext -pass file:alice/session_key
 echo "--> Alice base64 encoding ciphertext"
 base64 alice/ciphertext > alice/ciphertext.base64
 echo "--> Alice sending message"
 cp alice/ciphertext.base64 bob/.
+echo "--> Alice sending session key"
+cp alice/session_key_ciphertext.base64 bob/.
 
 echo "--> Bob base64 decoding ciphertext"
 base64 -d bob/ciphertext.base64 > bob/ciphertext
+echo "--> Bob base64 decoding session key ciphertext"
+base64 -d bob/session_key_ciphertext.base64 > bob/session_key_ciphertext
+echo "--> Bob decrypting session_key_ciphertext"
+openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/session_key_ciphertext -out bob/session_key
 echo "--> Bob decrypting ciphertext"
-openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/ciphertext -out bob/plaintext
+openssl enc -des3 -d -in bob/ciphertext -out bob/plaintext -pass file:bob/session_key
 
 echo "--> Bob message received:"
 cat bob/plaintext
