@@ -2,6 +2,7 @@
 
 # Generates keypairs
 # Encrypt private keys
+# Use des3 symmetric session key
 # Alice sends message to Bob
 
 echo
