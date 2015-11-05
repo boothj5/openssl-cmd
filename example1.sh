@@ -3,6 +3,16 @@
 # Generates keypairs
 # Alice sends message to Bob
 
+error_handler()
+{
+        ERR_CODE=$?
+        echo "Error $ERR_CODE with command '$BASH_COMMAND' on line ${BASH_LINENO[0]}. Exiting."
+        exit $ERR_CODE
+
+}
+
+trap error_handler ERR
+
 # key generation
 echo
 echo "--> Generating Alice's private key"
