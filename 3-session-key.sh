@@ -86,8 +86,8 @@ cp alice/session_key_ciphertext.base64 bob/.
 tput setaf 2
 echo "--> Bob base64 decodes"
 tput sgr0
-base64 -d bob/ciphertext.base64 > bob/ciphertext
-base64 -d bob/session_key_ciphertext.base64 > bob/session_key_ciphertext
+base64 --decode bob/ciphertext.base64 > bob/ciphertext
+base64 --decode bob/session_key_ciphertext.base64 > bob/session_key_ciphertext
 
 tput setaf 2
 echo "--> Bob decrypting session_key_ciphertext"

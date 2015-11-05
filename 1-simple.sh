@@ -62,7 +62,7 @@ cp alice/ciphertext.base64 bob/.
 tput setaf 2
 echo "--> Bob base64 decoding ciphertext"
 tput sgr0
-base64 -d bob/ciphertext.base64 > bob/ciphertext
+base64 --decode bob/ciphertext.base64 > bob/ciphertext
 
 tput setaf 2
 echo "--> Bob decrypting ciphertext"

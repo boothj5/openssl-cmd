@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+
 # Generates keypairs
 # Encrypt private keys
 # Use des3 symmetric session key
@@ -99,9 +101,9 @@ cp alice/signature.base64 bob/.
 tput setaf 2
 echo "--> Bob base64 decodes"
 tput sgr0
-base64 -d bob/ciphertext.base64 > bob/ciphertext
-base64 -d bob/session_key_ciphertext.base64 > bob/session_key_ciphertext
-base64 -d bob/signature.base64 > bob/signature
+base64 --decode bob/ciphertext.base64 > bob/ciphertext
+base64 --decode bob/session_key_ciphertext.base64 > bob/session_key_ciphertext
+base64 --decode bob/signature.base64 > bob/signature
 
 tput setaf 2
 echo "--> Bob verifying signature"
