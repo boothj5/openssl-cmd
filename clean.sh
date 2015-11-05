@@ -24,3 +24,12 @@ rm -f alice/session_key_ciphertext.base64
 rm -f bob/session_key
 rm -f bob/session_key_ciphertext
 rm -f bob/session_key_ciphertext.base64
+
+rm -f alice/digest
+rm -f alice/signature
+rm -f alice/signature.base64
+
+rm -f bob/signature
+rm -f bob/signature.base64
+rm -f bob/verify_digest
+rm -f bob/digest
