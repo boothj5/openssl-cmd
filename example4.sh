@@ -3,6 +3,7 @@
 # Generates keypairs
 # Encrypt private keys
 # Use des3 symmetric session key
+# Include signature
 # Alice sends message to Bob
 
 error_handler()
