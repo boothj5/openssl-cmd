@@ -59,14 +59,8 @@ openssl rand 8 -hex > alice/session_key
 echo "--> Alice encrypting session key"
 openssl rsautl -encrypt -inkey alice/bob_pub_key.pem -pubin -in alice/session_key -out alice/session_key_ciphertext
 
-echo "--> Alice base64 encoding session key ciphertext"
-base64 alice/session_key_ciphertext > alice/session_key_ciphertext.base64
-
 echo "--> Alice encrypting plaintext with session key"
 openssl enc -des3 -in alice/plaintext -out alice/ciphertext -pass file:alice/session_key
-
-echo "--> Alice base64 encoding ciphertext"
-base64 alice/ciphertext > alice/ciphertext.base64
 
 echo "--> Alice creating digest"
 sha256sum alice/plaintext | awk '{print $1}' > alice/digest
@@ -74,27 +68,21 @@ sha256sum alice/plaintext | awk '{print $1}' > alice/digest
 echo "--> Alice signing digest"
 openssl rsautl -sign -inkey alice/alice_priv_enc_key.pem -in alice/digest -out alice/signature
 
-echo "--> Alice base64 encoding signature"
+echo "--> Alice base64 encodes"
+base64 alice/ciphertext > alice/ciphertext.base64
+base64 alice/session_key_ciphertext > alice/session_key_ciphertext.base64
 base64 alice/signature > alice/signature.base64
 
 echo "--> Alice sending message"
 cp alice/ciphertext.base64 bob/.
-
-echo "--> Alice sending session key"
 cp alice/session_key_ciphertext.base64 bob/.
-
-echo "--> Alice sending signature"
 cp alice/signature.base64 bob/.
 
 # Bob receives
-echo "--> Bob base64 decoding signature"
-base64 -d bob/signature.base64 > bob/signature
-
-echo "--> Bob base64 decoding ciphertext"
+echo "--> Bob base64 decodes"
 base64 -d bob/ciphertext.base64 > bob/ciphertext
-
-echo "--> Bob base64 decoding session key ciphertext"
 base64 -d bob/session_key_ciphertext.base64 > bob/session_key_ciphertext
+base64 -d bob/signature.base64 > bob/signature
 
 echo "--> Bob verifying signature"
 openssl rsautl -verify -in bob/signature -inkey bob/alice_pub_key.pem -pubin > bob/verify_digest
