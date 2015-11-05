@@ -10,6 +10,7 @@ rm -f bob/bob_priv_key.pem
 rm -f bob/bob_pub_key.pem
 rm -f bob/alice_pub_key.pem
 
+rm -f alice/plaintext
 rm -f alice/ciphertext
 rm -f alice/ciphertext.base64
 

@@ -60,6 +60,12 @@ cp bob/bob_pub_key.pem alice/.
 
 # Alice sends
 tput setaf 2
+    echo "--> Alice create message" ; read -n1 -s
+tput sgr0
+echo "Hello this is a private message from Alice to Bob..." > alice/plaintext
+cat alice/plaintext
+
+tput setaf 2
     echo "--> Alice encrypt plaintext" ; read -n1 -s
 tput sgr0
 openssl rsautl -encrypt -inkey alice/bob_pub_key.pem -pubin -in alice/plaintext -out alice/ciphertext
@@ -76,5 +82,5 @@ tput setaf 2
     echo "--> Bob decrypt ciphertext" ; read -n1 -s
 tput sgr0
 base64 --decode bob/ciphertext.base64 > bob/ciphertext
-openssl rsautl -decrypt -inkey bob/bob_priv_key.pem -in bob/ciphertext -out bob/plaintext
+openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/ciphertext -out bob/plaintext
 cat bob/plaintext
