@@ -1,5 +1,3 @@
-Examples of using OpenSSL command line tool.
-
 The `coreutils` package is needed which is available on most Linux distros.  On OSX to install with brew:
 
 ```
