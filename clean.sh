@@ -13,10 +13,12 @@ rm -f bob/alice_pub_key.pem
 rm -f alice/plaintext
 rm -f alice/ciphertext
 rm -f alice/ciphertext.base64
+rm -f alice/message
 
 rm -f bob/ciphertext.base64
 rm -f bob/ciphertext
 rm -f bob/plaintext
+rm -f bob/message
 
 rm -f alice/session_key
 rm -f alice/session_key_ciphertext
