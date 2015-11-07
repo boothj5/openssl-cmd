@@ -37,4 +37,6 @@ rm -f bob/signature.base64
 rm -f bob/verify_digest
 rm -f bob/digest
 
+rm -f shared/secret_key
+
 tree

@@ -34,3 +34,5 @@ bob/signature
 bob/signature.base64
 bob/verify_digest
 bob/digest
+
+shared/secret_key

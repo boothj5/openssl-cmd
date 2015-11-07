@@ -23,6 +23,15 @@ echo_alice()
     read -n1 -s
 }
 
+echo_both()
+{
+    MESSAGE=$1
+    tput setaf $MAGENTA
+    echo $MESSAGE
+    tput sgr0
+    read -n1 -s
+}
+
 cat_safe()
 {
     FILE=$1
