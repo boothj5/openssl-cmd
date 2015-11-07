@@ -1,3 +1,4 @@
+RED=1
 GREEN=2
 
 echo_wait()
@@ -19,7 +20,7 @@ error_handler()
 {
     ERR_CODE=$?
 
-    tput setaf 1
+    tput setaf $RED
     echo "Error $ERR_CODE with command '$BASH_COMMAND' on line ${BASH_LINENO[0]}. Exiting."
     tput sgr0
     exit $ERR_CODE
