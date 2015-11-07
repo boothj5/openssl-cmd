@@ -8,33 +8,33 @@ PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 trap error_handler ERR
 trap exit_handler EXIT
 
-echo_wait $GREEN "--> Bob: Generate PRIVATE KEY"
+echo_wait $YELLOW "--> Bob: Generate PRIVATE KEY"
 openssl genrsa -out bob/bob_priv_key.pem 4096
 cat bob/bob_priv_key.pem
 
-echo_wait $GREEN "--> Bob: Extract PUBLIC KEY from PRIVATE KEY"
+echo_wait $YELLOW "--> Bob: Extract PUBLIC KEY from PRIVATE KEY"
 openssl rsa -pubout -in bob/bob_priv_key.pem -out bob/bob_pub_key.pem
 cat bob/bob_pub_key.pem
 
-echo_wait $GREEN "--> Bob: Send PUBLIC KEY to Alice"
+echo_wait $YELLOW "--> Bob: Send PUBLIC KEY to Alice"
 echo "cp bob/bob_pub_key.pem alice/."
 cp bob/bob_pub_key.pem alice/.
 
-echo_wait $GREEN "--> Alice: Create message"
+echo_wait $CYAN "--> Alice: Create message"
 echo "Hello this is a private message from Alice to Bob..." > alice/plaintext
 cat alice/plaintext
 
-echo_wait $GREEN "--> Alice: Encrypt plaintext with Bob's PUBLIC KEY"
+echo_wait $CYAN "--> Alice: Encrypt plaintext with Bob's PUBLIC KEY"
 openssl rsautl -encrypt -inkey alice/bob_pub_key.pem -pubin -in alice/plaintext -out alice/ciphertext
 base64 -w 0 alice/ciphertext > alice/message
 cat alice/message
 echo ""
 
-echo_wait $GREEN "--> Alice: Send message to Bob"
+echo_wait $CYAN "--> Alice: Send message to Bob"
 echo "cp alice/message bob/."
 cp alice/message bob/.
 
-echo_wait $GREEN "--> Bob: Decrypt message with Bob's PRIVATE KEY"
+echo_wait $YELLOW "--> Bob: Decrypt message with Bob's PRIVATE KEY"
 base64 --decode bob/message > bob/ciphertext
 openssl rsautl -decrypt -inkey bob/bob_priv_key.pem -in bob/ciphertext -out bob/plaintext
 cat bob/plaintext

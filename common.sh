@@ -1,5 +1,9 @@
 RED=1
 GREEN=2
+YELLOW=3
+BLUE=4
+MAGENTA=5
+CYAN=6
 
 echo_wait()
 {
@@ -8,8 +12,8 @@ echo_wait()
 
     tput setaf $COLOUR
     echo $MESSAGE
-    read -n1 -s
     tput sgr0
+    read -n1 -s
 }
 
 function exit_handler {
