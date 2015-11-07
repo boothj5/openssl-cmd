@@ -28,6 +28,7 @@ cat bob/bob_priv_key.pem
 
 echo_wait $GREEN "--> Encrypt Bobs's private key"
 openssl rsa -in bob/bob_priv_key.pem -des3 -out bob/bob_priv_enc_key.pem
+cat bob/bob_priv_enc_key.pem
 
 echo_wait $GREEN "--> Extract Bob's public key"
 openssl rsa -pubout -in bob/bob_priv_key.pem -out bob/bob_pub_key.pem
