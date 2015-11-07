@@ -4,83 +4,55 @@
 # Encrypt private keys
 # Alice sends message to Bob
 
-error_handler()
-{
-    ERR_CODE=$?
-    tput setaf 1
-    echo "Error $ERR_CODE with command '$BASH_COMMAND' on line ${BASH_LINENO[0]}. Exiting."
-    tput sgr0
-    exit $ERR_CODE
-}
+. ./common.sh
 
 trap error_handler ERR
+trap exit_handler EXIT
 
 # key generation
-tput setaf 2
-    echo "--> Generate Alice's private key" ; read -n1 -s
-tput sgr0
+echo_wait $GREEN "--> Generate Alice's private key"
 openssl genrsa -out alice/alice_priv_key.pem 4096
 cat alice/alice_priv_key.pem
 
-tput setaf 2
-    echo "--> Encrypt Alice's private key" ; read -n1 -s
-tput sgr0
+echo_wait $GREEN "--> Encrypt Alice's private key"
 openssl rsa -in alice/alice_priv_key.pem -des3 -out alice/alice_priv_enc_key.pem
 cat alice/alice_priv_enc_key.pem
 
-tput setaf 2
-    echo "--> Extract Alice's public key" ; read -n1 -s
-    tput sgr0
+echo_wait $GREEN "--> Extract Alice's public key"
 openssl rsa -pubout -in alice/alice_priv_key.pem -out alice/alice_pub_key.pem
 cat alice/alice_pub_key.pem
 
-tput setaf 2
-    echo "--> Generate Bob's private key" ; read -n1 -s
-tput sgr0
+echo_wait $GREEN "--> Generate Bob's private key"
 openssl genrsa -out bob/bob_priv_key.pem 4096
 cat bob/bob_priv_key.pem
 
-tput setaf 2
-    echo "--> Encrypt Bobs's private key" ; read -n1 -s
-tput sgr0
+echo_wait $GREEN "--> Encrypt Bobs's private key"
 openssl rsa -in bob/bob_priv_key.pem -des3 -out bob/bob_priv_enc_key.pem
 
-tput setaf 2
-    echo "--> Extract Bob's public key" ; read -n1 -s
-tput sgr0
+echo_wait $GREEN "--> Extract Bob's public key"
 openssl rsa -pubout -in bob/bob_priv_key.pem -out bob/bob_pub_key.pem
 cat bob/bob_pub_key.pem
 
 # key exchange
-tput setaf 2
-    echo "--> Exchange public keys" ; read -n1 -s
-tput sgr0
+echo_wait $GREEN "--> Exchange public keys"
 cp alice/alice_pub_key.pem bob/.
 cp bob/bob_pub_key.pem alice/.
 
 # Alice sends
-tput setaf 2
-    echo "--> Alice create message" ; read -n1 -s
-tput sgr0
+echo_wait $GREEN "--> Alice create message"
 echo "Hello this is a private message from Alice to Bob..." > alice/plaintext
 cat alice/plaintext
 
-tput setaf 2
-    echo "--> Alice encrypt plaintext" ; read -n1 -s
-tput sgr0
+echo_wait $GREEN "--> Alice encrypt plaintext"
 openssl rsautl -encrypt -inkey alice/bob_pub_key.pem -pubin -in alice/plaintext -out alice/ciphertext
 base64 alice/ciphertext > alice/ciphertext.base64
 cat alice/ciphertext.base64
 
-tput setaf 2
-    echo "--> Alice send message" ; read -n1 -s
-tput sgr0
+echo_wait $GREEN "--> Alice send message"
 cp alice/ciphertext.base64 bob/.
 
 # Bob receives
-tput setaf 2
-    echo "--> Bob decrypt ciphertext" ; read -n1 -s
-tput sgr0
+echo_wait $GREEN "--> Bob decrypt ciphertext"
 base64 --decode bob/ciphertext.base64 > bob/ciphertext
 openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/ciphertext -out bob/plaintext
 cat bob/plaintext
