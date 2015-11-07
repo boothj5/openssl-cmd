@@ -57,18 +57,32 @@ cat_unsafe()
 
 payload_create()
 {
-    echo "MESSAGE:" > alice/message
-    cat $1 >> alice/message
+    TARGET_FILE=$1
+    MESSAGE=$2
 
-    if [ ! -z "$2" ]; then
-        echo "" >> alice/message
-        echo "SESSION_KEY:" >> alice/message
-        cat $2 >> alice/message
-    fi
     if [ ! -z "$3" ]; then
-        echo "" >> alice/message
-        echo "SIGNATURE:" >> alice/message
-        cat $3 >> alice/message
+        SESSION_KEY=$3
+    else
+        SESSION_KEY=""
+    fi
+    if [ ! -z "$4" ]; then
+        SIGNATURE=$4
+    else
+        SIGNATURE=""
+    fi
+
+    echo "MESSAGE:" > $TARGET_FILE
+    cat $MESSAGE >> $TARGET_FILE
+
+    if [ ! -z "$SESSION_KEY" ]; then
+        echo "" >> $TARGET_FILE
+        echo "SESSION_KEY:" >> $TARGET_FILE
+        cat $SESSION_KEY >> $TARGET_FILE
+    fi
+    if [ ! -z "$SIGNATURE" ]; then
+        echo "" >> $TARGET_FILE
+        echo "SIGNATURE:" >> $TARGET_FILE
+        cat $SIGNATURE >> $TARGET_FILE
     fi
 }
 

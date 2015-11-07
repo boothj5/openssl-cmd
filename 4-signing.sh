@@ -73,7 +73,10 @@ cat_safe alice/signature.base64
 echo ""
 
 echo_alice "Alice send message"
-payload_create alice/ciphertext.base64 alice/session_key_ciphertext.base64 alice/signature.base64
+payload_create alice/message \
+    alice/ciphertext.base64 \
+    alice/session_key_ciphertext.base64 \
+    alice/signature.base64
 cp alice/message bob/.
 cat_safe bob/message
 echo ""
