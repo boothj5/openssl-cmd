@@ -2,7 +2,7 @@ The examples:
 * `1-simple.sh` - The most basic exmaple of public/private key encryption.
 * `2-encrypt-priv.sh` - Same as `1-simple.sh` with the addition of encrypting the private keys with a passphrase.
 * `3-session-key.sh` - Example using a generated symmetric session key for encryption of the plaintext.
-* `3-signing.sh` - Same as `3-session-key.sh` with the addition of a digital signature of a digest of the plaintext. 
+* `3-signing.sh` - Same as `3-session-key.sh` with the addition of signing a digest of the plaintext. 
 
 Notes:
 
