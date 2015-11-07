@@ -9,7 +9,7 @@ echo_wait $GREEN "--> Bob: Generate PRIVATE KEY"
 openssl genrsa -out bob/bob_priv_key.pem 4096
 cat bob/bob_priv_key.pem
 
-echo_wait $GREEN "--> Bob: Extract PUBLIC KEY from PRIVATE_KEY"
+echo_wait $GREEN "--> Bob: Extract PUBLIC KEY from PRIVATE KEY"
 openssl rsa -pubout -in bob/bob_priv_key.pem -out bob/bob_pub_key.pem
 cat bob/bob_pub_key.pem
 
@@ -30,8 +30,7 @@ echo_wait $GREEN "--> Alice: Send message to Bob"
 echo "cp alice/message bob/."
 cp alice/message bob/.
 
-# Bob receives
-echo_wait $GREEN "--> Bob: Decrypt message with Bob's PRIVATE_KEY"
+echo_wait $GREEN "--> Bob: Decrypt message with Bob's PRIVATE KEY"
 base64 --decode bob/message > bob/ciphertext
 openssl rsautl -decrypt -inkey bob/bob_priv_key.pem -in bob/ciphertext -out bob/plaintext
 cat bob/plaintext
