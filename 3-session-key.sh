@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Access coreutils on OSX, install with 'brew install coreutils'
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+
 . ./common.sh
 
 trap error_handler ERR
@@ -31,19 +34,23 @@ cat alice/session_key
 
 echo_wait $GREEN "--> Alice: Encrypt plaintext with SESSION KEY"
 openssl enc -des3 -in alice/plaintext -out alice/ciphertext -pass file:alice/session_key
-base64 alice/ciphertext > alice/ciphertext.base64
+base64 -w 0 alice/ciphertext > alice/ciphertext.base64
 cat alice/ciphertext.base64
+echo ""
 
 echo_wait $GREEN "--> Alice: Encrypt SESSION KEY with Bob's PUBLIC KEY"
 openssl rsautl -encrypt -inkey alice/bob_pub_key.pem -pubin -in alice/session_key -out alice/session_key_ciphertext
-base64 alice/session_key_ciphertext > alice/session_key_ciphertext.base64
+base64 -w 0 alice/session_key_ciphertext > alice/session_key_ciphertext.base64
 cat alice/session_key_ciphertext.base64
+echo ""
 
 echo_wait $GREEN "--> Alice: Compose message"
 echo "MESSAGE:" > alice/message
 cat alice/ciphertext.base64 >> alice/message
+echo "" >> alice/message
 echo "SESSION_KEY:" >> alice/message
 cat alice/session_key_ciphertext.base64 >> alice/message
+echo "" >> alice/message
 cat alice/message
 
 echo_wait $GREEN "--> Alice send message"

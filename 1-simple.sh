@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Access coreutils on OSX, install with 'brew install coreutils'
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+
 . ./common.sh
 
 trap error_handler ERR
@@ -23,8 +26,9 @@ cat alice/plaintext
 
 echo_wait $GREEN "--> Alice: Encrypt plaintext with Bob's PUBLIC KEY"
 openssl rsautl -encrypt -inkey alice/bob_pub_key.pem -pubin -in alice/plaintext -out alice/ciphertext
-base64 alice/ciphertext > alice/message
+base64 -w 0 alice/ciphertext > alice/message
 cat alice/message
+echo ""
 
 echo_wait $GREEN "--> Alice: Send message to Bob"
 echo "cp alice/message bob/."
