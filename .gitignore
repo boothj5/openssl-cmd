@@ -8,6 +8,7 @@ bob/bob_priv_key.pem
 bob/bob_pub_key.pem
 bob/alice_pub_key.pem
 
+alice/plaintext
 alice/ciphertext
 alice/ciphertext.base64
 
