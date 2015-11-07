@@ -4,4 +4,7 @@ The `coreutils` package is needed which is available on most Linux distros.  On 
 brew install coreutils
 ```
 
-Note: Some commands could be combined into one using OpenSSL, for example encryption and base64 encoding, or hashing and signing, but they've been split intentionally in the examples to demonstrate the stages required, and to make more obvious the inputs and outputs of each stage.
+Notes:
+
+* Some commands could be combined into one, e.g. encryption and base64 encoding, or hashing and signing. They are kept separate in the examples to show each step and the inputs and outputs
+* Although Private keys and Session keys are encrypted in some examples, the unencrypted version is not removed, again for illustration purposes.
