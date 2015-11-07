@@ -11,7 +11,9 @@ bob/alice_pub_key.pem
 alice/plaintext
 alice/ciphertext
 alice/ciphertext.base64
+alice/message
 
+bob/message
 bob/ciphertext.base64
 bob/ciphertext
 bob/plaintext
