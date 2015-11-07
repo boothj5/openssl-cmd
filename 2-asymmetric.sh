@@ -8,6 +8,8 @@ PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 trap error_handler ERR
 trap exit_handler EXIT
 
+create_dirs
+
 echo_bob "Bob: Generate PRIVATE KEY"
 openssl genrsa -out bob/bob_priv_key.pem 4096
 cat_unsafe bob/bob_priv_key.pem

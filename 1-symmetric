@@ -8,6 +8,8 @@ PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 trap error_handler ERR
 trap exit_handler EXIT
 
+create_dirs
+
 echo_both "Both: Alice and Bob share a SECRET KEY"
 openssl rand 8 -hex > shared/secret_key
 cat_unsafe shared/secret_key

@@ -5,6 +5,13 @@ BLUE=4
 MAGENTA=5
 CYAN=6
 
+create_dirs()
+{
+    mkdir alice
+    mkdir bob
+    mkdir shared
+}
+
 echo_bob()
 {
     MESSAGE=$1
