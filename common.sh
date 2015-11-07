@@ -5,18 +5,42 @@ BLUE=4
 MAGENTA=5
 CYAN=6
 
-echo_wait()
+echo_bob()
 {
-    COLOUR=$1    
-    MESSAGE=$2
-
-    tput setaf $COLOUR
+    MESSAGE=$1
+    tput setaf $YELLOW
     echo $MESSAGE
     tput sgr0
     read -n1 -s
 }
 
-function exit_handler {
+echo_alice()
+{
+    MESSAGE=$1
+    tput setaf $CYAN
+    echo $MESSAGE
+    tput sgr0
+    read -n1 -s
+}
+
+cat_safe()
+{
+    FILE=$1
+    tput setaf $GREEN
+    cat $FILE
+    tput sgr0
+}
+
+cat_unsafe()
+{
+    FILE=$1
+    tput setaf $RED
+    cat $FILE
+    tput sgr0
+}
+
+exit_handler()
+{
     tput sgr0
 }
 
@@ -24,8 +48,6 @@ error_handler()
 {
     ERR_CODE=$?
 
-    tput setaf $RED
     echo "Error $ERR_CODE with command '$BASH_COMMAND' on line ${BASH_LINENO[0]}. Exiting."
-    tput sgr0
     exit $ERR_CODE
 }
