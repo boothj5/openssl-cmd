@@ -86,6 +86,30 @@ payload_create()
     fi
 }
 
+payload_get_message()
+{
+    INPUT_FILE=$1
+    OUTPUT_FILE=$2
+
+    sed '2!d' $INPUT_FILE > $OUTPUT_FILE
+}
+
+payload_get_session_key()
+{
+    INPUT_FILE=$1
+    OUTPUT_FILE=$2
+
+    sed '4!d' $INPUT_FILE > $OUTPUT_FILE
+}
+
+payload_get_signature()
+{
+    INPUT_FILE=$1
+    OUTPUT_FILE=$2
+
+    sed '6!d' $INPUT_FILE > $OUTPUT_FILE
+}
+
 exit_handler()
 {
     tput sgr0

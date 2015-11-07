@@ -32,7 +32,7 @@ cat_safe bob/message
 echo ""
 
 echo_bob "Bob: Decrypt ciphertext with SECRET KEY"
-sed '2!d' alice/message > bob/ciphertext.base64
+payload_get_message bob/message bob/ciphertext.base64
 base64 --decode bob/ciphertext.base64 > bob/ciphertext
 openssl enc -des3 -d -in bob/ciphertext -out bob/plaintext -pass file:shared/secret_key
 cat_unsafe bob/plaintext

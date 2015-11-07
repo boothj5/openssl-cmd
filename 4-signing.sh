@@ -82,19 +82,19 @@ cat_safe bob/message
 echo ""
 
 echo_bob "Bob: Decrypt SESSION KEY with PRIVATE KEY"
-sed '4!d' alice/message > bob/session_key_ciphertext.base64
+payload_get_session_key alice/message bob/session_key_ciphertext.base64
 base64 --decode bob/session_key_ciphertext.base64 > bob/session_key_ciphertext
 openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/session_key_ciphertext -out bob/session_key
 cat_unsafe bob/session_key
 
 echo_bob "Bob: Decrypt ciphertext with SESSION KEY"
-sed '2!d' alice/message > bob/ciphertext.base64
+payload_get_message alice/message bob/ciphertext.base64
 base64 --decode bob/ciphertext.base64 > bob/ciphertext
 openssl enc -des3 -d -in bob/ciphertext -out bob/plaintext -pass file:bob/session_key
 cat_unsafe bob/plaintext
 
 echo_bob "Bob: Verify signature with Alice's PUBLIC KEY"
-sed '6!d' alice/message > bob/signature.base64
+payload_get_signature alice/message bob/signature.base64
 base64 --decode bob/signature.base64 > bob/signature
 openssl rsautl -verify -in bob/signature -inkey bob/alice_pub_key.pem -pubin > bob/verify_digest
 cat_safe bob/verify_digest

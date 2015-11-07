@@ -44,7 +44,7 @@ cat_safe bob/message
 echo ""
 
 echo_bob "--> Bob: Decrypt message with Bob's PRIVATE KEY"
-sed '2!d' alice/message > bob/ciphertext.base64
+payload_get_message bob/message bob/ciphertext.base64
 base64 --decode bob/ciphertext.base64 > bob/ciphertext
 openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/ciphertext -out bob/plaintext
 cat_unsafe bob/plaintext
