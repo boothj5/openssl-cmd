@@ -47,14 +47,10 @@ cat_safe alice/session_key_ciphertext.base64
 echo ""
 
 echo_alice "Alice send message"
-echo "MESSAGE:" > alice/message
-cat alice/ciphertext.base64 >> alice/message
-echo "" >> alice/message
-echo "SESSION_KEY:" >> alice/message
-cat alice/session_key_ciphertext.base64 >> alice/message
-echo "" >> alice/message
+payload_create alice/ciphertext.base64 alice/session_key_ciphertext.base64
 cp alice/message bob/.
 cat_safe bob/message
+echo ""
 
 echo_bob "Bob: Decrypt SESSION KEY with PRIVATE KEY"
 sed '4!d' alice/message > bob/session_key_ciphertext.base64

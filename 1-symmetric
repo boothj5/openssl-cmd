@@ -25,8 +25,7 @@ cat_safe alice/ciphertext.base64
 echo ""
 
 echo_alice "Alice: Send message to Bob"
-echo "MESSAGE:" > alice/message
-cat alice/ciphertext.base64 >> alice/message
+payload_create alice/ciphertext.base64
 cp alice/message bob/.
 cat_safe bob/message
 echo ""
