@@ -2,7 +2,7 @@ The examples:
 * `1-symmetric.sh` - Simple symmetric key (shared secret) encryption.
 * `2-asymmetric.sh` - Simple asymmetric key (public/private) encryption.
 * `3-asymmetric-session-key.sh` - Asymmetric key encryption using symmetric key for message encryption.
-* `4-asymmetric-session-key-signature` - Same as `3-asymmetric-session-key.sh` with the addition of a digital signature of a digest of the message.
+* `4-asymmetric-session-key-signature.sh` - Same as `3-asymmetric-session-key.sh` with the addition of a digital signature for authentication and message integrity.
 
 Notes:
 
