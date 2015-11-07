@@ -46,31 +46,24 @@ base64 -w 0 alice/session_key_ciphertext > alice/session_key_ciphertext.base64
 cat_safe alice/session_key_ciphertext.base64
 echo ""
 
-echo_alice "Alice: Compose message"
+echo_alice "Alice send message"
 echo "MESSAGE:" > alice/message
 cat alice/ciphertext.base64 >> alice/message
 echo "" >> alice/message
 echo "SESSION_KEY:" >> alice/message
 cat alice/session_key_ciphertext.base64 >> alice/message
 echo "" >> alice/message
-cat_safe  alice/message
-
-echo_alice "Alice send message"
-echo "cp alice/message bob/."
 cp alice/message bob/.
-
-echo_bob "Bob: Receive message"
 cat_safe bob/message
 
-sed '2!d' alice/message > bob/ciphertext.base64
-sed '4!d' alice/message > bob/session_key_ciphertext.base64
-base64 --decode bob/ciphertext.base64 > bob/ciphertext
-base64 --decode bob/session_key_ciphertext.base64 > bob/session_key_ciphertext
-
 echo_bob "Bob: Decrypt SESSION KEY with PRIVATE KEY"
+sed '4!d' alice/message > bob/session_key_ciphertext.base64
+base64 --decode bob/session_key_ciphertext.base64 > bob/session_key_ciphertext
 openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/session_key_ciphertext -out bob/session_key
 cat_unsafe bob/session_key
 
 echo_bob "Bob: Decrypt ciphertext with SESSION KEY"
+sed '2!d' alice/message > bob/ciphertext.base64
+base64 --decode bob/ciphertext.base64 > bob/ciphertext
 openssl enc -des3 -d -in bob/ciphertext -out bob/plaintext -pass file:bob/session_key
 cat_unsafe bob/plaintext

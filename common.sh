@@ -7,9 +7,9 @@ CYAN=6
 
 create_dirs()
 {
-    mkdir alice
-    mkdir bob
-    mkdir shared
+    mkdir -p alice
+    mkdir -p bob
+    mkdir -p shared
 }
 
 echo_bob()
