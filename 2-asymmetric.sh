@@ -30,15 +30,19 @@ cat_unsafe alice/plaintext
 
 echo_alice "Alice: Encrypt plaintext with Bob's PUBLIC KEY"
 openssl rsautl -encrypt -inkey alice/bob_pub_key.pem -pubin -in alice/plaintext -out alice/ciphertext
-base64 -w 0 alice/ciphertext > alice/message
-cat_safe alice/message
+base64 -w 0 alice/ciphertext > alice/ciphertext.base64
+cat_safe alice/ciphertext.base64
 echo ""
 
 echo_alice "Alice: Send message to Bob"
-echo "cp alice/message bob/."
+echo "MESSAGE:" > alice/message
+cat alice/ciphertext.base64 >> alice/message
 cp alice/message bob/.
+cat_safe bob/message
+echo ""
 
 echo_bob "--> Bob: Decrypt message with Bob's PRIVATE KEY"
-base64 --decode bob/message > bob/ciphertext
+sed '2!d' alice/message > bob/ciphertext.base64
+base64 --decode bob/ciphertext.base64 > bob/ciphertext
 openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/ciphertext -out bob/plaintext
 cat_unsafe bob/plaintext
