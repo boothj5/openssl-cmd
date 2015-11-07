@@ -18,7 +18,6 @@ echo_bob()
     tput setaf $YELLOW
     echo $MESSAGE
     tput sgr0
-    read -n1 -s
 }
 
 echo_alice()
@@ -27,7 +26,6 @@ echo_alice()
     tput setaf $CYAN
     echo $MESSAGE
     tput sgr0
-    read -n1 -s
 }
 
 echo_both()
@@ -36,6 +34,10 @@ echo_both()
     tput setaf $MAGENTA
     echo $MESSAGE
     tput sgr0
+}
+
+wait_key()
+{
     read -n1 -s
 }
 
