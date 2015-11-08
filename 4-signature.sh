@@ -12,7 +12,7 @@ create_dirs
 
 echo_bob "Bob: Generate PRIVATE KEY"
 wait_key
-openssl genrsa -out bob/bob_priv_key.pem 4096
+openssl genrsa -out bob/bob_priv_key.pem 1024
 cat_unsafe bob/bob_priv_key.pem
 
 echo_bob "Bob: Encrypt PRIVATE_KEY"
@@ -30,7 +30,7 @@ cp bob/bob_pub_key.pem alice/.
 
 echo_alice "Alice: Generate PRIVATE KEY"
 wait_key
-openssl genrsa -out alice/alice_priv_key.pem 4096
+openssl genrsa -out alice/alice_priv_key.pem 1024
 cat_unsafe alice/alice_priv_key.pem
 
 echo_alice "Alice: Encrypt PRIVATE_KEY"

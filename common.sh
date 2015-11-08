@@ -9,7 +9,16 @@ create_dirs()
 {
     mkdir -p alice
     mkdir -p bob
+    mkdir -p trent
     mkdir -p shared
+}
+
+echo_error()
+{
+    MESSAGE=$1
+    tput setaf $RED
+    echo $MESSAGE
+    tput sgr0
 }
 
 echo_bob()
@@ -32,6 +41,14 @@ echo_both()
 {
     MESSAGE=$1
     tput setaf $MAGENTA
+    echo $MESSAGE
+    tput sgr0
+}
+
+echo_trent()
+{
+    MESSAGE=$1
+    tput setaf $BLUE
     echo $MESSAGE
     tput sgr0
 }
