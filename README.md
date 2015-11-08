@@ -4,18 +4,24 @@ OpenSSL command line examples
 Examples
 --------
 
-`1-symmetric.sh`
+```
+1-symmetric.sh
+```
 Simple symmetric key (shared secret) encryption.
 - Alice and Bob both have agreed on and (somehow) shared a secret key between themselves.
 - The secret key is used for encryption and decryption.
 
-`2-asymmetric.sh`
+```
+2-asymmetric.sh
+```
 Simple asymmetric key (public/private) encryption.
 - Bob has a public/private keypair and shares the public key with Alice.
 - Alice encrypts the message with Bob's public key.
 - Bob decrypts the message with his private key.
 
-`3-session-key.sh`
+```
+3-session-key.sh
+```
 Asymmetric key encryption optimised by using symmetric key for message encryption.
 - Bob has a public/private keypair and shares the public key with Alice.
 - Alice generates a session key (symmetric).
@@ -25,7 +31,9 @@ Asymmetric key encryption optimised by using symmetric key for message encryptio
 - Bob decrypts the session key with his private key.
 - Bob decrypts the message with the session key.
 
-`4-signature.sh`
+```
+4-signature.sh
+```
 Asymmetric key encryption, with session key, and the addition of a digital signature.
 - Bob has a public/private kepair and shares the public key with Alice.
 - Alice has a public/private kepair and shares the public key with Bob.
@@ -41,7 +49,9 @@ Asymmetric key encryption, with session key, and the addition of a digital signa
 - Bob creates a hash digest of the message using the same algorithm as Alice.
 - Bob checks that his digest is the same as Alice's.
 
-`5-certificate.sh`
+```
+5-certificate.sh
+```
 Asymmetric key encryption, with session key, signature and trusted third party signed certificates.
 - Trent is a Certificate Authority trusted by Alice and Bob.
 - Trent has a public/private keypair which he self signs and sends to Alice and Bob.
@@ -73,29 +83,38 @@ Display scripts
 
 After running any of the examples, use the following to view the contents of the various types of PEM files.
 
-`show-privatekey.sh`
-Show contents of a private key PEM file, e.g.:
+```
+show-privatekey.sh
+```
+Examples:
 ```
 ./show-privatekey.sh bob/bob_priv_key.pem
 ./show-privatekey.sh bob/bob_priv_enc_key.pem
 ```
 
-`show-publickey.sh`
-Show contents of a public key PEM file, e.g.:
+```
+show-publickey.sh
+```
+Example:
 ```
 ./show-publickey.sh alice/alice_pub_key.pem
 ```
 
-`show-csr.sh`
-Show contents of a Certificate Signing Request, e.g.:
+```
+show-csr.sh
+```
+Example:
 ```
 ./show-csr.sh bob/bob_csr.pem
 ```
 
-`show-certificate.sh`
-Show contents of a certificate, e.g.:
+```
+show-certificate.sh
+```
+Examples:
 ```
 ./show-certificate.sh alice/bob_certby_trent.pem
+./show-certificate.sh trent/trent_certby_trent.pem
 ```
 
 Notes
