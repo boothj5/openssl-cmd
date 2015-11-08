@@ -4,6 +4,8 @@ OpenSSL command line examples
 Examples
 --------
 
+Before running an example, run `./clean.sh` to remove any files from a previous example. This is not done automatically so you can view the contents of the generated files using the display scripts (see below).
+
 `1-symmetric.sh` - Simple symmetric key (shared secret) encryption.
 - Alice and Bob both have agreed on and (somehow) shared a secret key between themselves.
 - The secret key is used for encryption and decryption.
