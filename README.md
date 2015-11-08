@@ -2,8 +2,8 @@ The examples:
 
 `1-symmetric.sh`
 Simple symmetric key (shared secret) encryption.
-Alice and Bob both have agreed on and (somehow) shared a secret key between themselves.
-The secret key is used for encryption and decryption.
+- Alice and Bob both have agreed on and (somehow) shared a secret key between themselves.
+- The secret key is used for encryption and decryption.
 
 `2-asymmetric.sh`
 Simple asymmetric key (public/private) encryption.
