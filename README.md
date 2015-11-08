@@ -1,4 +1,8 @@
-The examples:
+OpenSSL command line examples
+=============================
+
+Examples
+--------
 
 `1-symmetric.sh`
 Simple symmetric key (shared secret) encryption.
@@ -64,7 +68,38 @@ Asymmetric key encryption, with session key, signature and trusted third party s
 - Bob creates a hash digest of the message using the same algorithm as Alice.
 - Bob checks that his digest is the same as Alice's.
 
-Notes:
+Display scripts
+---------------
+
+After running any of the examples, use the following to view the contents of the various types of PEM files.
+
+`show-privatekey.sh`
+Show contents of a private key PEM file, e.g.:
+```
+./show-privatekey.sh bob/bob_priv_key.pem
+./show-privatekey.sh bob/bob_priv_enc_key.pem
+```
+
+`show-publickey.sh`
+Show contents of a public key PEM file, e.g.:
+```
+./show-publickey.sh alice/alice_pub_key.pem
+```
+
+`show-csr.sh`
+Show contents of a Certificate Signing Request, e.g.:
+```
+./show-csr.sh bob/bob_csr.pem
+```
+
+`show-certificate.sh`
+Show contents of a certificate, e.g.:
+```
+./show-certificate.sh alice/bob_certby_trent.pem
+```
+
+Notes
+-----
 
 * The `coreutils` package is needed which is available on most Linux distros.  On OSX to install with brew use `brew install coreutils`.
 * Some commands could be combined into one, e.g. encryption and base64 encoding, or hashing and signing. They are kept separate in the examples to show each step and the inputs and outputs
