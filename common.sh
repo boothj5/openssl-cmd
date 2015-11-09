@@ -17,6 +17,7 @@ echo_error()
 {
     MESSAGE=$1
     tput setaf $RED
+    tput bold
     echo $MESSAGE
     tput sgr0
 }
@@ -25,6 +26,8 @@ echo_bob()
 {
     MESSAGE=$1
     tput setaf $YELLOW
+    tput bold
+    echo ""
     echo $MESSAGE
     tput sgr0
 }
@@ -33,6 +36,8 @@ echo_alice()
 {
     MESSAGE=$1
     tput setaf $CYAN
+    tput bold
+    echo ""
     echo $MESSAGE
     tput sgr0
 }
@@ -41,6 +46,8 @@ echo_both()
 {
     MESSAGE=$1
     tput setaf $MAGENTA
+    tput bold
+    echo ""
     echo $MESSAGE
     tput sgr0
 }
@@ -49,6 +56,8 @@ echo_trent()
 {
     MESSAGE=$1
     tput setaf $BLUE
+    tput bold
+    echo ""
     echo $MESSAGE
     tput sgr0
 }
