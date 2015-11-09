@@ -16,11 +16,13 @@ openssl genrsa -out bob/bob_priv_key.pem 1024
 cat_unsafe bob/bob_priv_key.pem
 
 echo_bob "Bob: Encrypt PRIVATE_KEY"
-openssl rsa -in bob/bob_priv_key.pem -des3 -out bob/bob_priv_enc_key.pem
+wait_key
+openssl rsa -in bob/bob_priv_key.pem -des3 -out bob/bob_priv_enc_key.pem -passout pass:bobpassword
 cat_safe bob/bob_priv_enc_key.pem
 
 echo_bob "Bob: Extract PUBLIC KEY from PRIVATE KEY"
-openssl rsa -pubout -in bob/bob_priv_enc_key.pem -out bob/bob_pub_key.pem
+wait_key
+openssl rsa -pubout -in bob/bob_priv_enc_key.pem -out bob/bob_pub_key.pem -passin pass:bobpassword
 cat_safe bob/bob_pub_key.pem
 
 echo_bob "Bob: Send PUBLIC KEY to Alice"
@@ -34,11 +36,13 @@ openssl genrsa -out alice/alice_priv_key.pem 1024
 cat_unsafe alice/alice_priv_key.pem
 
 echo_alice "Alice: Encrypt PRIVATE_KEY"
-openssl rsa -in alice/alice_priv_key.pem -des3 -out alice/alice_priv_enc_key.pem
+wait_key
+openssl rsa -in alice/alice_priv_key.pem -des3 -out alice/alice_priv_enc_key.pem -passout pass:alicepassword
 cat_safe alice/alice_priv_enc_key.pem
 
 echo_alice "Alice: Extract PUBLIC KEY from PRIVATE KEY"
-openssl rsa -pubout -in alice/alice_priv_enc_key.pem -out alice/alice_pub_key.pem
+wait_key
+openssl rsa -pubout -in alice/alice_priv_enc_key.pem -out alice/alice_pub_key.pem -passin pass:alicepassword
 cat_safe alice/alice_pub_key.pem
 
 echo_alice "Alice: Send PUBLIC KEY to Bob"
@@ -76,7 +80,8 @@ sha256sum alice/plaintext | awk '{print $1}' > alice/digest
 cat_safe alice/digest
 
 echo_alice "Alice: Sign digest with PRIVATE KEY"
-openssl rsautl -sign -inkey alice/alice_priv_enc_key.pem -in alice/digest -out alice/signature
+wait_key
+openssl rsautl -sign -inkey alice/alice_priv_enc_key.pem -in alice/digest -out alice/signature -passin pass:alicepassword
 base64 -w 0 alice/signature > alice/signature.base64
 cat_safe alice/signature.base64
 echo ""
@@ -92,9 +97,10 @@ cat_safe bob/message
 echo ""
 
 echo_bob "Bob: Decrypt SESSION KEY with PRIVATE KEY"
+wait_key
 payload_get_session_key alice/message bob/session_key_ciphertext.base64
 base64 --decode bob/session_key_ciphertext.base64 > bob/session_key_ciphertext
-openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/session_key_ciphertext -out bob/session_key
+openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/session_key_ciphertext -out bob/session_key -passin pass:bobpassword
 cat_unsafe bob/session_key
 
 echo_bob "Bob: Decrypt ciphertext with SESSION KEY"

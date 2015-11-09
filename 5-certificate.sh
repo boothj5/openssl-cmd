@@ -16,19 +16,23 @@ openssl genrsa -out trent/trent_priv_key.pem 1024
 cat_unsafe trent/trent_priv_key.pem
 
 echo_trent "Trent: Encrypt PRIVATE_KEY"
-openssl rsa -in trent/trent_priv_key.pem -des3 -out trent/trent_priv_enc_key.pem
+wait_key
+openssl rsa -in trent/trent_priv_key.pem -des3 -out trent/trent_priv_enc_key.pem -passout pass:trentpassword
 cat_safe trent/trent_priv_enc_key.pem
 
 echo_trent "Trent: Extract PUBLIC KEY from PRIVATE KEY"
-openssl rsa -pubout -in trent/trent_priv_enc_key.pem -out trent/trent_pub_key.pem
+wait_key
+openssl rsa -pubout -in trent/trent_priv_enc_key.pem -out trent/trent_pub_key.pem -passin pass:trentpassword
 cat_safe trent/trent_pub_key.pem
 
 echo_trent "Trent: Create certficiate signing request"
-openssl req -new -key trent/trent_priv_enc_key.pem -out trent/trent_csr.pem
+wait_key
+openssl req -new -key trent/trent_priv_enc_key.pem -out trent/trent_csr.pem -passin pass:trentpassword
 cat_safe trent/trent_csr.pem
 
 echo_trent "Trent: Self sign CSR"
-openssl x509 -req -days 3650 -in trent/trent_csr.pem -signkey trent/trent_priv_enc_key.pem -out trent/trent_certby_trent.pem
+wait_key
+openssl x509 -req -days 3650 -in trent/trent_csr.pem -signkey trent/trent_priv_enc_key.pem -out trent/trent_certby_trent.pem -passin pass:trentpassword
 cat_safe trent/trent_certby_trent.pem
 
 echo_trent "Trent: Send self signed certificate to Alice and Bob"
@@ -54,15 +58,18 @@ openssl genrsa -out bob/bob_priv_key.pem 1024
 cat_unsafe bob/bob_priv_key.pem
 
 echo_bob "Bob: Encrypt PRIVATE_KEY"
-openssl rsa -in bob/bob_priv_key.pem -des3 -out bob/bob_priv_enc_key.pem
+wait_key
+openssl rsa -in bob/bob_priv_key.pem -des3 -out bob/bob_priv_enc_key.pem -passout pass:bobpassword
 cat_safe bob/bob_priv_enc_key.pem
 
 echo_bob "Bob: Extract PUBLIC KEY from PRIVATE KEY"
-openssl rsa -pubout -in bob/bob_priv_enc_key.pem -out bob/bob_pub_key.pem
+wait_key
+openssl rsa -pubout -in bob/bob_priv_enc_key.pem -out bob/bob_pub_key.pem -passin pass:bobpassword
 cat_safe bob/bob_pub_key.pem
 
 echo_bob "Bob: Create certificate signing request"
-openssl req -new -key bob/bob_priv_enc_key.pem -out bob/bob_csr.pem
+wait_key
+openssl req -new -key bob/bob_priv_enc_key.pem -out bob/bob_csr.pem -passin pass:bobpassword
 cat_safe bob/bob_csr.pem
 
 echo_bob "Bob: Send CSR to Trent"
@@ -71,7 +78,8 @@ echo "cp bob/bob_csr.pem trent/."
 cp bob/bob_csr.pem trent/.
 
 echo_trent "Trent: Sign Bob's CSR"
-openssl x509 -req -days 3650 -in trent/bob_csr.pem -CA trent/trent_certby_trent.pem -CAkey trent/trent_priv_enc_key.pem -CAcreateserial -out trent/bob_certby_trent.pem
+wait_key
+openssl x509 -req -days 3650 -in trent/bob_csr.pem -CA trent/trent_certby_trent.pem -CAkey trent/trent_priv_enc_key.pem -CAcreateserial -out trent/bob_certby_trent.pem -passin pass:trentpassword
 cat_safe trent/bob_certby_trent.pem
 
 echo_trent "Trent: Send Bob's signed certificate to Bob"
@@ -90,15 +98,18 @@ openssl genrsa -out alice/alice_priv_key.pem 1024
 cat_unsafe alice/alice_priv_key.pem
 
 echo_alice "Alice: Encrypt PRIVATE_KEY"
-openssl rsa -in alice/alice_priv_key.pem -des3 -out alice/alice_priv_enc_key.pem
+wait_key
+openssl rsa -in alice/alice_priv_key.pem -des3 -out alice/alice_priv_enc_key.pem -passout pass:alicepassword
 cat_safe alice/alice_priv_enc_key.pem
 
 echo_alice "Alice: Extract PUBLIC KEY from PRIVATE KEY"
-openssl rsa -pubout -in alice/alice_priv_enc_key.pem -out alice/alice_pub_key.pem
+wait_key
+openssl rsa -pubout -in alice/alice_priv_enc_key.pem -out alice/alice_pub_key.pem -passin pass:alicepassword
 cat_safe alice/alice_pub_key.pem
 
 echo_alice "Alice: Create certificate signing request"
-openssl req -new -key alice/alice_priv_enc_key.pem -out alice/alice_csr.pem
+wait_key
+openssl req -new -key alice/alice_priv_enc_key.pem -out alice/alice_csr.pem -passin pass:alicepassword
 cat_safe alice/alice_csr.pem
 
 echo_alice "Alice: Send CSR to Trent"
@@ -107,7 +118,8 @@ echo "cp alice/alice_csr.pem trent/."
 cp alice/alice_csr.pem trent/.
 
 echo_trent "Trent: Sign Alice's CSR"
-openssl x509 -req -days 3650 -in trent/alice_csr.pem -CA trent/trent_certby_trent.pem -CAkey trent/trent_priv_enc_key.pem -CAcreateserial -out trent/alice_certby_trent.pem
+wait_key
+openssl x509 -req -days 3650 -in trent/alice_csr.pem -CA trent/trent_certby_trent.pem -CAkey trent/trent_priv_enc_key.pem -CAcreateserial -out trent/alice_certby_trent.pem -passin pass:trentpassword
 cat_safe trent/alice_certby_trent.pem
 
 echo_trent "Trent: Send Alice's signed certificate to Alice"
@@ -160,7 +172,8 @@ sha256sum alice/plaintext | awk '{print $1}' > alice/digest
 cat_safe alice/digest
 
 echo_alice "Alice: Sign digest with PRIVATE KEY"
-openssl rsautl -sign -inkey alice/alice_priv_enc_key.pem -in alice/digest -out alice/signature
+wait_key
+openssl rsautl -sign -inkey alice/alice_priv_enc_key.pem -in alice/digest -out alice/signature -passin pass:alicepassword
 base64 -w 0 alice/signature > alice/signature.base64
 cat_safe alice/signature.base64
 echo ""
@@ -186,9 +199,10 @@ fi
 echo_bob "Bob: Verify success"
 
 echo_bob "Bob: Decrypt SESSION KEY with PRIVATE KEY"
+wait_key
 payload_get_session_key alice/message bob/session_key_ciphertext.base64
 base64 --decode bob/session_key_ciphertext.base64 > bob/session_key_ciphertext
-openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/session_key_ciphertext -out bob/session_key
+openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/session_key_ciphertext -out bob/session_key -passin pass:bobpassword
 cat_unsafe bob/session_key
 
 echo_bob "Bob: Decrypt ciphertext with SESSION KEY"

@@ -16,11 +16,13 @@ openssl genrsa -out bob/bob_priv_key.pem 1024
 cat_unsafe bob/bob_priv_key.pem
 
 echo_bob "Bob: Encrypt PRIVATE_KEY"
-openssl rsa -in bob/bob_priv_key.pem -des3 -out bob/bob_priv_enc_key.pem
+wait_key
+openssl rsa -in bob/bob_priv_key.pem -des3 -out bob/bob_priv_enc_key.pem -passout pass:bobpassword
 cat_safe bob/bob_priv_enc_key.pem
 
 echo_bob "Bob: Extract PUBLIC KEY from PRIVATE KEY"
-openssl rsa -pubout -in bob/bob_priv_enc_key.pem -out bob/bob_pub_key.pem
+wait_key
+openssl rsa -pubout -in bob/bob_priv_enc_key.pem -out bob/bob_pub_key.pem -passin pass:bobpassword
 cat_safe bob/bob_pub_key.pem
 
 echo_bob "Bob: Send PUBLIC KEY to Alice"
@@ -49,7 +51,8 @@ cat_safe bob/message
 echo ""
 
 echo_bob "--> Bob: Decrypt message with Bob's PRIVATE KEY"
+wait_key
 payload_get_message bob/message bob/ciphertext.base64
 base64 --decode bob/ciphertext.base64 > bob/ciphertext
-openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/ciphertext -out bob/plaintext
+openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/ciphertext -out bob/plaintext -passin pass:bobpassword
 cat_unsafe bob/plaintext

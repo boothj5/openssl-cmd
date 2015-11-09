@@ -16,11 +16,13 @@ openssl genrsa -out bob/bob_priv_key.pem 1024
 cat_unsafe bob/bob_priv_key.pem
 
 echo_bob "Bob: Encrypt PRIVATE_KEY"
-openssl rsa -in bob/bob_priv_key.pem -des3 -out bob/bob_priv_enc_key.pem
+wait_key
+openssl rsa -in bob/bob_priv_key.pem -des3 -out bob/bob_priv_enc_key.pem -passout pass:bobpassword
 cat_safe bob/bob_priv_enc_key.pem
 
 echo_bob "Bob: Extract PUBLIC KEY from PRIVATE KEY"
-openssl rsa -pubout -in bob/bob_priv_enc_key.pem -out bob/bob_pub_key.pem
+wait_key
+openssl rsa -pubout -in bob/bob_priv_enc_key.pem -out bob/bob_pub_key.pem -passin pass:bobpassword
 cat_safe bob/bob_pub_key.pem
 
 echo_bob "Bob: Send PUBLIC KEY to Alice"
@@ -62,12 +64,14 @@ cat_safe bob/message
 echo ""
 
 echo_bob "Bob: Decrypt SESSION KEY with PRIVATE KEY"
+wait_key
 payload_get_session_key alice/message bob/session_key_ciphertext.base64
 base64 --decode bob/session_key_ciphertext.base64 > bob/session_key_ciphertext
-openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/session_key_ciphertext -out bob/session_key
+openssl rsautl -decrypt -inkey bob/bob_priv_enc_key.pem -in bob/session_key_ciphertext -out bob/session_key -passin pass:bobpassword
 cat_unsafe bob/session_key
 
 echo_bob "Bob: Decrypt ciphertext with SESSION KEY"
+wait_key
 payload_get_message alice/message bob/ciphertext.base64
 base64 --decode bob/ciphertext.base64 > bob/ciphertext
 openssl enc -des3 -d -in bob/ciphertext -out bob/plaintext -pass file:bob/session_key
